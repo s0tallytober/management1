@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "230253689626",
+    "firebase_url": "https://school-management-system-27ab4.firebaseio.com",
+    "project_id": "school-management-system-27ab4",
+    "storage_bucket": "school-management-system-27ab4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:230253689626:android:418865cbef53c5ff",
+        "android_client_info": {
+          "package_name": "com.venkatesh.schoolmanagement"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "230253689626-fu4mtm65nktimhri9c4cnc9tiehrruha.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.venkatesh.schoolmanagement",
+            "certificate_hash": "b8f1c853b1eb53495b7da67781bf5e89d7b1a149"
+          }
+        },
+        {
+          "client_id": "230253689626-b89d58s7amqushb5hjnn405fli2i0ov4.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.venkatesh.schoolmanagement",
+            "certificate_hash": "d99225149dcc80f4f7011a854c10e110e8a0bdef"
+          }
+        },
+        {
+          "client_id": "230253689626-umfc0g2ag162rnur3lfdnarqfesvnm6j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAlHvpnyWvdVRGKTg1HzjUv1J5L_Pj-pNM"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "230253689626-umfc0g2ag162rnur3lfdnarqfesvnm6j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

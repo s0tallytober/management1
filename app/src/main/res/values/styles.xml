@@ -1,0 +1,28 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="android:windowDisablePreview">true</item>
+    </style>
+
+    <style name="fontMedium">
+        <item name="android:fontFamily">@font/poppins_medium</item>
+    </style>
+
+    <style name="fontRegular">
+        <item name="android:fontFamily">@font/poppins_regular</item>
+    </style>
+
+    <style name="fontBold">
+        <item name="android:fontFamily">@font/poppins_bold</item>
+    </style>
+
+    <style name="fontLight">
+        <item name="android:fontFamily">@font/poppins_medium</item>
+    </style>
+
+</resources>
