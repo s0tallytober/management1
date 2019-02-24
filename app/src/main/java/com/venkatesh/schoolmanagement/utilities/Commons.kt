@@ -2,6 +2,11 @@ package com.venkatesh.schoolmanagement.utilities
 
 import android.app.AlertDialog
 import android.content.Context
+import android.graphics.Color
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.ForegroundColorSpan
+
 
 object Commons {
     //Showing alert dialog for validation messages , confirmation messgaes
@@ -14,7 +19,7 @@ object Commons {
         negativeButtonText: String = "No",
         neutralButtonText: String = "Cancel",
         isCancelable: Boolean = true,
-        dialogCallback: DialogCallback ?= null
+        dialogCallback: DialogCallback? = null
     ) {
         // Initialize a new instance of
         val builder = AlertDialog.Builder(context)
@@ -52,5 +57,12 @@ object Commons {
         // Display the alert dialog on app interface
         dialog.show()
 
+    }
+
+    fun spanTwoTexts(data1: String, data2: String) {
+        val word = SpannableString(data1)
+        word.setSpan(ForegroundColorSpan(Color.GRAY), 0, word.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+        val wordTwo = SpannableString(data2)
+        wordTwo.setSpan(ForegroundColorSpan(Color.BLACK), 0, wordTwo.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
     }
 }

@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Common menu for user dashboards-->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:id="@+id/updateProfile" android:title="@string/profile"/>
+    <item android:id="@+id/chgPassword" android:title="@string/change_password"/>
     <item android:id="@+id/logout" android:title="@string/logout"/>
 </menu>
