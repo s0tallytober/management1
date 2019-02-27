@@ -1,0 +1,55 @@
+<android.support.v7.widget.CardView
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto" android:layout_width="match_parent"
+        app:cardBackgroundColor="@color/input_login_hint"
+        app:cardUseCompatPadding="true"
+        app:cardPreventCornerOverlap="true"
+        app:cardMaxElevation="@dimen/_2dp"
+        app:cardElevation="@dimen/_2dp"
+        android:layout_marginRight="@dimen/_50dp"
+        android:background="@drawable/ic_chat_bg"
+        app:cardCornerRadius="@dimen/_5dp"
+        android:layout_height="wrap_content">
+
+    <RelativeLayout
+            android:padding="@dimen/_10dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        <TextView
+                style="@style/fontRegular"
+                android:text="Santosh........"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:id="@+id/message_user"
+                android:textStyle="normal|bold"/>
+
+
+        <TextView
+                style="@style/fontRegular"
+                android:text="Hi..........."
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/message_user"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="5dp"
+                android:id="@+id/message_text"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                android:textSize="16sp"/>
+
+        <TextView
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/message_text"
+                style="@style/fontRegular"
+                android:textSize="@dimen/_10sp"
+                android:text="Admin 12121212121"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:id="@+id/message_time"/>
+
+    </RelativeLayout>
+
+</android.support.v7.widget.CardView>

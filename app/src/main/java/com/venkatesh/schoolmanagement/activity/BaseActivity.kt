@@ -65,6 +65,11 @@ open class BaseActivity : AppCompatActivity() {
                 val intent = Intent(this@BaseActivity, ProfileActivity::class.java)
                 startActivity(intent)
             }
+
+            R.id.groupChat -> {
+                val intent = Intent(this@BaseActivity, ChatActivity::class.java)
+                startActivity(intent)
+            }
         }
         return true
     }

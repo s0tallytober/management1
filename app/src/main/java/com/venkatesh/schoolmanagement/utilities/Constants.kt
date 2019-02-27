@@ -1,5 +1,7 @@
 package com.venkatesh.schoolmanagement.utilities
 
+import com.venkatesh.schoolmanagement.model.UserProfile
+
 object Constants {
     const val loginType = "LoginType"
     const val studnet = "Student"
@@ -15,4 +17,9 @@ object Constants {
     const val gender = "gender"
     const val RESULT_LOAD_IMAGE = 100
     const val MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 101
+    const val chats = "chat_history"
+    var userProfile: UserProfile? = null
+    const val profile_images = "profile_images"
+    const val events = "events"
+    const val event_images="event_images"
 }

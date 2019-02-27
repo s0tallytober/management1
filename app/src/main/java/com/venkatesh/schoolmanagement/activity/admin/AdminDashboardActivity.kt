@@ -1,12 +1,21 @@
 package com.venkatesh.schoolmanagement.activity.admin
 
 import android.os.Bundle
+import android.support.annotation.WorkerThread
 import android.support.v7.widget.GridLayoutManager
+import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.venkatesh.schoolmanagement.BaseActivityToChildActivity
 import com.venkatesh.schoolmanagement.R
 import com.venkatesh.schoolmanagement.activity.BaseActivity
+import com.venkatesh.schoolmanagement.activity.ProfileActivity
 import com.venkatesh.schoolmanagement.adapter.AdminDashboardAdapter
+import com.venkatesh.schoolmanagement.model.UserProfile
+import com.venkatesh.schoolmanagement.utilities.Constants
 import kotlinx.android.synthetic.main.activity_admin_dashboard.*
 
 class AdminDashboardActivity : BaseActivity(), BaseActivityToChildActivity {
@@ -19,6 +28,8 @@ class AdminDashboardActivity : BaseActivity(), BaseActivityToChildActivity {
         mAuth = FirebaseAuth.getInstance()
         super.attachInstance(this)
         creatingActionsInGridView() // Preparing list of actions on main screen
+
+        displayProfile()
     }
 
     private fun creatingActionsInGridView() {
@@ -72,4 +83,27 @@ class AdminDashboardActivity : BaseActivity(), BaseActivityToChildActivity {
     override fun signOut() {
         mAuth.signOut()
     }
+
+    @WorkerThread
+    private fun displayProfile() {
+        val mDatabaseReference = FirebaseDatabase.getInstance().reference
+        val user = FirebaseAuth.getInstance().currentUser
+
+        user?.uid?.let {
+            mDatabaseReference.child("other_user_details").child(it).addListenerForSingleValueEvent(object :
+                ValueEventListener {
+                override fun onDataChange(dataSnapshot: DataSnapshot) {
+                    Constants.userProfile = dataSnapshot.getValue<UserProfile>(UserProfile::class.java)
+                }
+
+                override fun onCancelled(databaseError: DatabaseError) {
+                    Log.d(
+                        ProfileActivity::class.java.simpleName, "Error trying to get classified ad for update " +
+                                "" + databaseError
+                    )
+                }
+            })
+        }
+    }
+
 }

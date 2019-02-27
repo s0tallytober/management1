@@ -240,7 +240,7 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun uploadImage(filePath: Uri?) {
         showProgressBar()
-        val mStorageReference = FirebaseStorage.getInstance().getReference("profile_images")
+        val mStorageReference = FirebaseStorage.getInstance().getReference(Constants.profile_images)
         /* filePath?.let {
              val fileReference =
                  mStorageReference.child("${System.currentTimeMillis()}.${getExtensionFromUri(it)}")

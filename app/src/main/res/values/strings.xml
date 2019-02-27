@@ -73,4 +73,13 @@
     <string name="need_read_store_perm">Permission required to do the functionalty.</string>
     <string name="profile_image_success">Profile image uploaded successfully</string>
     <string name="profile_image_failed">Profile image update failed</string>
+    <string name="enter_message">Enter message</string>
+    <string name="sent">Sent</string>
+    <string name="failToSend">Failed to send</string>
+    <string name="groupchat">Group Chat</string>
+    <string name="add_event">Add Event</string>
+    <string name="eventMessage">Event Message</string>
+    <string name="add_image">Add Image</string>
+    <string name="event_update_success">Event added successully</string>
+    <string name="event_update_failed">Event update failed</string>
 </resources>

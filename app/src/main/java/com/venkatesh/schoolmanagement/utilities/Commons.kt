@@ -6,6 +6,7 @@ import android.graphics.Color
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import java.util.*
 
 
 object Commons {
@@ -64,5 +65,9 @@ object Commons {
         word.setSpan(ForegroundColorSpan(Color.GRAY), 0, word.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
         val wordTwo = SpannableString(data2)
         wordTwo.setSpan(ForegroundColorSpan(Color.BLACK), 0, wordTwo.length, Spannable.SPAN_EXCLUSIVE_EXCLUSIVE)
+    }
+
+    fun getCurrentDateTime(): String? {
+       return java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
     }
 }

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import com.venkatesh.schoolmanagement.R
+import com.venkatesh.schoolmanagement.activity.admin.AddEventActivity
 import com.venkatesh.schoolmanagement.activity.admin.CreateStudentTeacherActivity
 import com.venkatesh.schoolmanagement.adapter.AdminDashboardAdapter.AdminDashboardViewHolder
 import com.venkatesh.schoolmanagement.utilities.Constants
@@ -58,7 +59,8 @@ class AdminDashboardAdapter(val context: Context, private val actionsList: List<
                     }
 
                     5 -> {
-
+                        val intent = Intent(context, AddEventActivity::class.java)
+                        context.startActivity(intent)
                     }
                 }
             }
