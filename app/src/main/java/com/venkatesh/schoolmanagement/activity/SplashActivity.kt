@@ -39,9 +39,6 @@ class SplashActivity : Activity() {
 
     override fun onResume() {
         super.onResume()
-        /*Handler().postDelayed({
-            checkPreviousLoginSession()
-        }, 2000)*/
         checkPreviousLoginSession()
     }
 
@@ -52,7 +49,6 @@ class SplashActivity : Activity() {
             // launch login activity
             Handler().postDelayed({startActivity(Intent(this@SplashActivity, SelectLoginTypeActivity::class.java))
                 finish()
-                checkPreviousLoginSession()
             }, 2000)
         } else {
             getProfile(user)
