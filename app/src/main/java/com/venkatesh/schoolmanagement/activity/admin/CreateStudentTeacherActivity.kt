@@ -2,22 +2,23 @@ package com.venkatesh.schoolmanagement.activity.admin
 
 import android.content.Context
 import android.content.SharedPreferences
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.FirebaseDatabase
 import com.venkatesh.schoolmanagement.R
+import com.venkatesh.schoolmanagement.ServiceAddUser
 import com.venkatesh.schoolmanagement.activity.isValidEmail
 import com.venkatesh.schoolmanagement.model.UserProfile
 import com.venkatesh.schoolmanagement.utilities.Commons
 import com.venkatesh.schoolmanagement.utilities.Constants
 import com.venkatesh.schoolmanagement.utilities.DialogCallback
 import kotlinx.android.synthetic.main.activity_create_student.*
+
+//This class is used to create student admin teacher
 
 class CreateStudentTeacherActivity : AppCompatActivity() {
     private var gender = ""
@@ -63,23 +64,24 @@ class CreateStudentTeacherActivity : AppCompatActivity() {
             if (!validateDetails()) {
                 progressBarAdd.visibility = View.VISIBLE
                 mAuth.createUserWithEmailAndPassword(etAddEmail.text.toString(), etAddPassword.text.toString())
-                    .addOnCompleteListener(this@CreateStudentTeacherActivity,
-                        { task ->
-                            if (task.isSuccessful) {
-                                addOtherDetails(mAuth.currentUser)
-                            } else {
-                                Commons.showAlertDialog(
-                                    context = this@CreateStudentTeacherActivity,
-                                    message = getString(R.string.user_creation_fail)
-                                )
+                    .addOnCompleteListener(this@CreateStudentTeacherActivity
+                    ) { task ->
+                        if (task.isSuccessful) {
+                            addOtherDetails(mAuth.currentUser)
+                        } else {
+                            Commons.showAlertDialog(
+                                context = this@CreateStudentTeacherActivity,
+                                message = getString(R.string.user_creation_fail)
+                            )
 
-                            }
-                        })
+                        }
+                    }
 
             }
         }
     }
 
+    //Firebase Creating user
     private fun addOtherDetails(currentUser: FirebaseUser?) {
         val mDatabaseReference = FirebaseDatabase.getInstance().reference
         currentUser?.uid?.let {
@@ -96,6 +98,7 @@ class CreateStudentTeacherActivity : AppCompatActivity() {
                                 override fun positiveClick() {
                                     mAuth.signOut()
                                     reSignIn()
+                                    ServiceAddUser.addUser(this@CreateStudentTeacherActivity,profileData)
                                 }
                             }
                         )
@@ -109,27 +112,29 @@ class CreateStudentTeacherActivity : AppCompatActivity() {
         }
     }
 
-    //Resigning into original loin
+    //Resigning into original signin
     private fun reSignIn() {
         runOnUiThread {
             mAuth.signInWithEmailAndPassword(
                 sharedPreferences.getString(Constants.email, ""),
                 sharedPreferences.getString(Constants.password, "")
             )
-                .addOnCompleteListener(this, { task ->
+                .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         progressBarAdd.visibility = View.GONE
                         finish()
                     }
-                })
+                }
         }
 
     }
 
+    //Creating model object with profile
     private fun getProfileDataFromUi(uid: String): UserProfile {
         return UserProfile(etAddName.text.toString(), etAddMobileNumber.text.toString(), gender, user, uid, "")
     }
 
+    //Validations
     private fun validateDetails(): Boolean {
         var status = false
         if (etAddEmail.text.isEmpty() || !(etAddEmail.text.isValidEmail())) {

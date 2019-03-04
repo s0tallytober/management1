@@ -1,5 +1,6 @@
 package com.venkatesh.schoolmanagement.utilities
 
+import com.venkatesh.schoolmanagement.model.SMSEvent
 import com.venkatesh.schoolmanagement.model.UserProfile
 
 object Constants {
@@ -21,5 +22,8 @@ object Constants {
     var userProfile: UserProfile? = null
     const val profile_images = "profile_images"
     const val events = "events"
-    const val event_images="event_images"
+    const val event_images = "event_images"
+    var eventsList: ArrayList<SMSEvent> = arrayListOf()
+    const val REQUEST_CODE = 101
+    const val students="students"
 }

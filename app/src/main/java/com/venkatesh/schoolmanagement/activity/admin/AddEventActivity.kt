@@ -1,6 +1,7 @@
 package com.venkatesh.schoolmanagement.activity.admin
 
 import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
@@ -32,7 +33,7 @@ class AddEventActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_event)
-        title=getString(R.string.add_event)
+        title = getString(R.string.add_event)
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
@@ -137,13 +138,15 @@ class AddEventActivity : AppCompatActivity() {
     }
 
     private fun addEvent() {
-        val event=SMSEvent(downloadUrl.toString(),etAddEventMessage.text.toString(),
+        val event = SMSEvent(
+            downloadUrl.toString(), etAddEventMessage.text.toString(),
             Commons.getCurrentDateTime()!!,
             Constants.userProfile!!.userName,
-            Constants.userProfile!!.userId)
-
+            Constants.userProfile!!.userId
+        )
+        Constants.eventsList.add(event)
         val mDatabaseReference = FirebaseDatabase.getInstance().reference
-        mDatabaseReference.child(Constants.events).setValue(arrayListOf(event))
+        mDatabaseReference.child(Constants.events).setValue(Constants.eventsList)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     hideProgressBar()
@@ -152,6 +155,8 @@ class AddEventActivity : AppCompatActivity() {
                         message = getString(R.string.event_update_success),
                         dialogCallback = object : DialogCallback() {
                             override fun positiveClick() {
+                                val intent = Intent()
+                                setResult(Activity.RESULT_OK, intent)
                                 finish()
                             }
                         }
@@ -174,7 +179,7 @@ class AddEventActivity : AppCompatActivity() {
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-        when(item?.itemId){
+        when (item?.itemId) {
             android.R.id.home -> {
                 finish()
             }

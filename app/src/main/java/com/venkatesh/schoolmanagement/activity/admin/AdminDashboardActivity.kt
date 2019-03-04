@@ -1,7 +1,6 @@
 package com.venkatesh.schoolmanagement.activity.admin
 
 import android.os.Bundle
-import android.support.annotation.WorkerThread
 import android.support.v7.widget.GridLayoutManager
 import android.util.Log
 import com.google.firebase.auth.FirebaseAuth
@@ -29,62 +28,30 @@ class AdminDashboardActivity : BaseActivity(), BaseActivityToChildActivity {
         super.attachInstance(this)
         creatingActionsInGridView() // Preparing list of actions on main screen
 
-        displayProfile()
+       // displayProfile()
     }
 
     private fun creatingActionsInGridView() {
         val actionsList =
-            arrayListOf("Add Student", "Add Teacher", "Remove Student", "Remove Teacher", "Add Course", "Add Event")
+            arrayListOf(
+                getString(R.string.addStudent),
+                getString(R.string.addTeacher),
+                getString(R.string.addAdmin),
+                "Remove Teacher",
+                getString(R.string.addCource),
+                getString(R.string.events)
+            )
         val adapter = AdminDashboardAdapter(this, actionsList)
         recyclerAdminDashboard.layoutManager = GridLayoutManager(this@AdminDashboardActivity, 2)
         recyclerAdminDashboard.adapter = adapter
     }
-
-    /* override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-         menuInflater.inflate(R.menu.admin_dashboard_menu, menu)
-         return true
-     }
-
-     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
-         when (item?.itemId) {
-             R.id.logout -> {
-                 Commons.showAlertDialog(
-                     context = this@AdminDashboardActivity,
-                     nofOptions = 2,
-                     positiveButtonText = getString(R.string.yes),
-                     message = getString(R.string.msgLogout),
-                     dialogCallback = object : DialogCallback() {
-                         override fun positiveClick() {
-                             signOut()
-                             val intent = Intent(this@AdminDashboardActivity, SelectLoginTypeActivity::class.java)
-                             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
-                             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
-                             finishAffinity()
-                             startActivity(intent)
-                         }
-                     }
-                 )
-             }
-
-             R.id.chgPassword -> {
-                 val intent = Intent(this@AdminDashboardActivity, ChangePasswordActivity::class.java)
-                 startActivity(intent)
-             }
-
-             R.id.updateProfile -> {
-                 val intent = Intent(this@AdminDashboardActivity, ProfileActivity::class.java)
-                 startActivity(intent)
-             }
-         }
-         return true
-     }*/
 
     //sign out method
     override fun signOut() {
         mAuth.signOut()
     }
 
-    @WorkerThread
+
     private fun displayProfile() {
         val mDatabaseReference = FirebaseDatabase.getInstance().reference
         val user = FirebaseAuth.getInstance().currentUser
@@ -105,5 +72,4 @@ class AdminDashboardActivity : BaseActivity(), BaseActivityToChildActivity {
             })
         }
     }
-
 }

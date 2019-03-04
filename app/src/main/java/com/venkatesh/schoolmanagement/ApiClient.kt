@@ -1,8 +1,10 @@
 package com.venkatesh.schoolmanagement
 
 import android.content.Context
+import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.venkatesh.schoolmanagement.model.ChatMessage
+import com.venkatesh.schoolmanagement.model.SMSEvent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -55,6 +57,22 @@ object ApiClient {
 
             override fun onFailure(call: Call<List<ChatMessage>>, t: Throwable) {
                 Toast.makeText(context, t.message, Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    fun getEvents(eventsActivity: AppCompatActivity, retrofitCallback: RetrofitCallback) {
+        val apiService = getClient()?.create(RetrofitApiInteface::class.java)
+
+        val call: Call<List<SMSEvent>> = apiService?.getEvents()!!
+        call.enqueue(object : Callback<List<SMSEvent>> {
+            override fun onResponse(call: Call<List<SMSEvent>>, response: Response<List<SMSEvent>>) {
+                if (response.isSuccessful && response.body() != null)
+                    retrofitCallback.onResponse(response.body())
+            }
+
+            override fun onFailure(call: Call<List<SMSEvent>>, t: Throwable) {
+                Toast.makeText(eventsActivity, t.message, Toast.LENGTH_SHORT).show()
             }
         })
     }

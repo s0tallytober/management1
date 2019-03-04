@@ -3,7 +3,7 @@ package com.venkatesh.schoolmanagement.model
 import com.google.gson.annotations.SerializedName
 
 data class SMSEvent(
-    @SerializedName("eventImage")
+    @SerializedName("eventImageUrl")
     val eventImageUrl: String = "",
     @SerializedName("eventMessage")
     val eventMessage: String = "",

@@ -1,5 +1,7 @@
 package com.venkatesh.schoolmanagement.model
 
+import java.io.Serializable
+
 data class UserProfile(
     var userName: String = "",
     var phoneNumber: String = "",
@@ -7,5 +9,5 @@ data class UserProfile(
     var role: String = "",
     var userId: String = "",
     var url: String = ""
-)
+):Serializable
 

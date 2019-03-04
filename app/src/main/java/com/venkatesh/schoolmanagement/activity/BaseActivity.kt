@@ -7,6 +7,9 @@ import android.content.SharedPreferences
 import android.support.v7.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.Toast
+import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.auth.FirebaseAuth
 import com.venkatesh.schoolmanagement.BaseActivityToChildActivity
 import com.venkatesh.schoolmanagement.R
 import com.venkatesh.schoolmanagement.utilities.Commons
@@ -69,6 +72,39 @@ open class BaseActivity : AppCompatActivity() {
             R.id.groupChat -> {
                 val intent = Intent(this@BaseActivity, ChatActivity::class.java)
                 startActivity(intent)
+            }
+
+            R.id.deleteAccount -> {
+                Commons.showAlertDialog(this@BaseActivity,
+                    nofOptions = 2,
+                    positiveButtonText = getString(R.string.yes),
+                    negativeButtonText = getString(R.string.cancel),
+                    message = getString(R.string.areYouSure), dialogCallback = object : DialogCallback() {
+                        override fun positiveClick() {
+                            FirebaseAuth.getInstance().currentUser?.delete()
+                                ?.addOnCompleteListener(OnCompleteListener<Void> { task ->
+                                    if (task.isSuccessful) {
+                                        Commons.showAlertDialog(
+                                            context = this@BaseActivity,
+                                            message = getString(R.string.account_delete_message)
+                                        )
+                                        startActivity(
+                                            Intent(
+                                                this@BaseActivity,
+                                                SelectLoginTypeActivity::class.java
+                                            )
+                                        )
+                                        finish()
+                                    } else {
+                                        Toast.makeText(
+                                            this@BaseActivity,
+                                            "Failed to delete your account!",
+                                            Toast.LENGTH_SHORT
+                                        ).show()
+                                    }
+                                })
+                        }
+                    })
             }
         }
         return true

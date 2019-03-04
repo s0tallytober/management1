@@ -59,6 +59,8 @@
     <string name="profile_update_failed">Update Failed</string>
     <string name="male">Male</string>
     <string name="btn_add_student">Add</string>
+    <string name="addTeacher">Add Teacher</string>
+    <string name="addStudent">Add Student</string>
     <string name="valid_name">Enter valid name</string>
     <string name="valid_mobile">Enter valid mobile</string>
     <string name="created_success">created successfully</string>
@@ -82,4 +84,13 @@
     <string name="add_image">Add Image</string>
     <string name="event_update_success">Event added successully</string>
     <string name="event_update_failed">Event update failed</string>
+    <string name="events">Events</string>
+    <string name="posted_a_event">Posted an event</string>
+    <string name="delete_account">Delete Account</string>
+    <string name="ok">Ok</string>
+    <string name="cancel">Cancel</string>
+    <string name="areYouSure">Are you sure ?</string>
+    <string name="account_delete_message">Account deleted, please contact admin to create new</string>
+    <string name="addAdmin">Add Admin</string>
+    <string name="addCource">Add Course</string>
 </resources>
