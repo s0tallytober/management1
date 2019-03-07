@@ -21,6 +21,7 @@ import com.google.firebase.storage.UploadTask
 import com.venkatesh.schoolmanagement.R
 import com.venkatesh.schoolmanagement.model.SMSEvent
 import com.venkatesh.schoolmanagement.utilities.Commons
+import com.venkatesh.schoolmanagement.utilities.Commons.getExtensionFromUri
 import com.venkatesh.schoolmanagement.utilities.Constants
 import com.venkatesh.schoolmanagement.utilities.DialogCallback
 import kotlinx.android.synthetic.main.activity_add_event.*
@@ -44,7 +45,7 @@ class AddEventActivity : AppCompatActivity() {
             uploadImage(filePath)
         }
         addImage.setOnClickListener {
-            callImagepPicker()
+            profileImageUpload()
         }
     }
 
@@ -57,7 +58,7 @@ class AddEventActivity : AppCompatActivity() {
             ) == PackageManager.PERMISSION_GRANTED
         ) {
             // Permission has already been granted
-            callImagepPicker()
+            callImagePicker()
         } else {
             // Permission is not granted
             // Should we show an explanation?
@@ -84,7 +85,21 @@ class AddEventActivity : AppCompatActivity() {
         }
     }
 
-    private fun callImagepPicker() {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<out String>, grantResults: IntArray) {
+        when (requestCode) {
+            Constants.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE -> {
+                if (ContextCompat.checkSelfPermission(
+                        this,
+                        Manifest.permission.READ_EXTERNAL_STORAGE
+                    ) == PackageManager.PERMISSION_GRANTED
+                ) {
+                    callImagePicker()
+                }
+            }
+        }
+    }
+
+    private fun callImagePicker() {
         val imgIntent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
         startActivityForResult(imgIntent, Constants.RESULT_LOAD_IMAGE)
     }
@@ -119,7 +134,8 @@ class AddEventActivity : AppCompatActivity() {
         showProgressBar()
         val mStorageReference = FirebaseStorage.getInstance().getReference(Constants.event_images)
         filePath?.let {
-            val fileReference = mStorageReference.child("${System.currentTimeMillis()}.${getExtensionFromUri(it)}")
+            val fileReference =
+                mStorageReference.child("${System.currentTimeMillis()}.${getExtensionFromUri(this, it)}")
             val uploadTask = fileReference.putFile(it)
             uploadTask.continueWithTask(object : Continuation<UploadTask.TaskSnapshot, Task<Uri>> {
                 override fun then(task: Task<UploadTask.TaskSnapshot>): Task<Uri>? {
@@ -171,12 +187,6 @@ class AddEventActivity : AppCompatActivity() {
             }
     }
 
-
-    private fun getExtensionFromUri(uri: Uri): String? {
-        val contentResolver = contentResolver
-        val mimeTypeMap = MimeTypeMap.getSingleton()
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri))
-    }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
         when (item?.itemId) {

@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorPrimary"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:padding="@dimen/_10dp"
+        tools:context=".activity.admin.AddMaterialActivity">
+
+    <Spinner
+            android:paddingBottom="@dimen/_5dp"
+            android:id="@+id/mySpinner"
+            style="@style/Base.Widget.AppCompat.Spinner.Underlined"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50dp"/>
+
+    <RelativeLayout
+            android:layout_marginTop="@dimen/_10dp"
+            android:id="@+id/rlUpload"
+            android:layout_below="@+id/mySpinner"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <EditText
+                android:fontFamily="@font/poppins_light"
+                android:layout_marginRight="10dp"
+                android:layout_alignParentLeft="true"
+                android:layout_toLeftOf="@+id/uploadBtn"
+                android:id="@+id/fileName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+        <Button
+                android:fontFamily="@font/poppins_light"
+                android:background="@color/colorAccent"
+                android:textAllCaps="false"
+                android:text="@string/upload"
+                android:id="@+id/uploadBtn"
+                android:layout_alignParentRight="true"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"/>
+    </RelativeLayout>
+
+    <android.support.design.widget.TextInputLayout
+            android:id="@+id/fileDesc"
+            android:layout_below="@+id/rlUpload"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <EditText
+                android:id="@+id/etAddDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/_10dp"
+                android:layout_marginTop="@dimen/_20dp"
+                android:hint="@string/file_desc"
+                android:inputType="textMultiLine"
+                android:maxLines="3"
+                style="@style/fontRegular"
+                android:textColor="@android:color/white"
+                android:textColorHint="@android:color/white"
+                android:importantForAutofill="no"/>
+
+    </android.support.design.widget.TextInputLayout>
+
+    <Button
+            android:fontFamily="@font/poppins_medium"
+            android:layout_below="@+id/fileDesc"
+            style="@style/fontRegular"
+            android:id="@+id/btnAddMaterial"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dip"
+            android:background="@color/colorAccent"
+            android:text="@string/add_material"
+            android:textColor="@android:color/black"/>
+
+    <ProgressBar
+            android:id="@+id/progressBarCP"
+            android:layout_width="@dimen/_30dp"
+            android:layout_height="@dimen/_30dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/_20dp"
+            android:visibility="gone"/>
+
+</RelativeLayout>

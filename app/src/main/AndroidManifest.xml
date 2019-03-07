@@ -15,32 +15,64 @@
             android:roundIcon="@mipmap/ic_launcher_round"
             android:supportsRtl="true"
             android:theme="@style/AppTheme">
+        <activity android:name=".activity.admin.AddMaterialActivity">
+        </activity>
+
         <service
                 android:name=".ServiceAddUser"
                 android:exported="false">
         </service>
 
-        <activity android:name=".activity.EventsActivity">
-        </activity>
-        <activity android:name=".activity.admin.AddEventActivity">
-        </activity>
-        <activity android:name=".activity.ChatActivity">
-        </activity>
-        <activity android:name=".activity.admin.CreateStudentTeacherActivity">
-        </activity>
-        <activity android:name=".activity.ProfileActivity">
-        </activity>
-        <activity android:name=".activity.ChangePasswordActivity">
-        </activity>
-        <activity android:name=".activity.admin.AdminDashboardActivity">
-        </activity>
-        <activity android:name=".activity.teacher.TeacherDashboardActivity">
-        </activity>
-        <activity android:name=".activity.student.StudentDashboardActivity">
-        </activity>
-        <activity android:name=".activity.SelectLoginTypeActivity">
+        <activity
+                android:launchMode="singleTop"
+                android:name=".activity.EventsActivity">
         </activity>
         <activity
+                android:launchMode="singleTop"
+                android:name=".activity.admin.AddEventActivity">
+        </activity>
+        <activity
+                android:launchMode="singleTop"
+                android:name=".activity.ChatActivity">
+        </activity>
+        <activity
+                android:launchMode="singleTop"
+                android:name=".activity.admin.CreateStudentTeacherActivity">
+        </activity>
+        <activity
+                android:launchMode="singleTop"
+                android:name=".activity.ProfileActivity">
+        </activity>
+        <activity
+                android:launchMode="singleTop"
+                android:name=".activity.ChangePasswordActivity">
+        </activity>
+        <activity
+                android:launchMode="singleTop"
+                android:name=".activity.admin.AdminDashboardActivity">
+        </activity>
+        <activity
+                android:launchMode="singleTop"
+                android:name=".activity.teacher.TeacherDashboardActivity">
+        </activity>
+        <activity
+                android:launchMode="singleTop"
+                android:name=".activity.student.StudentDashboardActivity">
+        </activity>
+        <activity
+                android:launchMode="singleTop"
+                android:name=".activity.SelectLoginTypeActivity">
+        </activity>
+        <activity
+                android:launchMode="singleTop"
+                android:name=".activity.admin.StudentsActivity">
+        </activity>
+        <activity
+                android:launchMode="singleTop"
+                android:name=".activity.admin.TeachersActivity">
+        </activity>
+        <activity
+                android:launchMode="singleTop"
                 android:name=".activity.LoginActivity"
                 android:parentActivityName=".activity.SelectLoginTypeActivity">
         </activity>

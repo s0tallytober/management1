@@ -95,7 +95,7 @@ class ProfileActivity : AppCompatActivity() {
 
     private fun callImagepPicker() {
         val imgIntent = Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI)
-        startActivityForResult(imgIntent, Constants.RESULT_LOAD_IMAGE)
+        startActivityForResult(imgIntent, 202)
     }
 
     override fun onStart() {
@@ -115,7 +115,7 @@ class ProfileActivity : AppCompatActivity() {
         }
 
         btnUpdateProfile.setOnClickListener {
-            getProfileDataFromUi()?.let { it1 -> updateProfile(it1) }
+            uploadImage()
         }
     }
 
@@ -164,7 +164,7 @@ class ProfileActivity : AppCompatActivity() {
                 gender,
                 sharedPreferences.getString(Constants.role, ""),
                 it,
-                downloadUrl + ""
+                downloadUrl.toString()
             )
         }
     }
@@ -219,11 +219,33 @@ class ProfileActivity : AppCompatActivity() {
         return true
     }
 
+    private fun uploadImage() {
+        showProgressBar()
+        val mStorageReference = FirebaseStorage.getInstance().getReference(Constants.profile_images)
+        filePath?.let {
+            val fileReference =
+                mStorageReference.child("${System.currentTimeMillis()}.${Commons.getExtensionFromUri(this, it)}")
+            val uploadTask = fileReference.putFile(it)
+            uploadTask.continueWithTask(object : Continuation<UploadTask.TaskSnapshot, Task<Uri>> {
+                override fun then(task: Task<UploadTask.TaskSnapshot>): Task<Uri>? {
+                    if (!task.isSuccessful) {
+                        throw task.exception!!
+                    }
+                    return fileReference.downloadUrl
+                }
+            }).addOnCompleteListener {
+                downloadUrl = it.result.toString()
+                getProfileDataFromUi()?.let { it1 -> updateProfile(it1) }
+            }
+        }
+
+    }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         data?.let {
-            if (requestCode == RESULT_LOAD_IMAGE && resultCode == RESULT_OK) {
+            if (requestCode == 202 && resultCode == RESULT_OK) {
                 filePath = it.data
-                uploadImage(filePath)
+                //uploadImage(filePath)
                 try {
                     //getting image from gallery
                     val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, filePath)
@@ -270,7 +292,7 @@ class ProfileActivity : AppCompatActivity() {
                     return fileReference.downloadUrl
                 }
             }).addOnCompleteListener {
-                progressBarCP.visibility=View.GONE
+                progressBarCP.visibility = View.GONE
                 downloadUrl = it.result.toString()
                 //getProfileDataFromUi()?.let { it1 -> updateProfile(it1) }
             }

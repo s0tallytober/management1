@@ -34,10 +34,10 @@ class AdminDashboardActivity : BaseActivity(), BaseActivityToChildActivity {
     private fun creatingActionsInGridView() {
         val actionsList =
             arrayListOf(
-                getString(R.string.addStudent),
-                getString(R.string.addTeacher),
+                getString(R.string.student),
+                getString(R.string.teacher),
                 getString(R.string.addAdmin),
-                "Remove Teacher",
+                getString(R.string.add_material),
                 getString(R.string.addCource),
                 getString(R.string.events)
             )

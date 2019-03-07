@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
 import com.venkatesh.schoolmanagement.model.ChatMessage
 import com.venkatesh.schoolmanagement.model.SMSEvent
+import com.venkatesh.schoolmanagement.model.UserProfile
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -76,4 +77,37 @@ object ApiClient {
             }
         })
     }
+
+    fun getStudents(eventsActivity: AppCompatActivity, retrofitCallback: RetrofitCallback) {
+        val apiService = getClient()?.create(RetrofitApiInteface::class.java)
+
+        val call: Call<List<UserProfile>> = apiService?.getStudents()!!
+        call.enqueue(object : Callback<List<UserProfile>> {
+            override fun onResponse(call: Call<List<UserProfile>>, response: Response<List<UserProfile>>) {
+                if (response.isSuccessful && response.body() != null)
+                    retrofitCallback.onResponse(response.body())
+            }
+
+            override fun onFailure(call: Call<List<UserProfile>>, t: Throwable) {
+                Toast.makeText(eventsActivity, t.message, Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
+    fun getTeachers(eventsActivity: AppCompatActivity, retrofitCallback: RetrofitCallback) {
+        val apiService = getClient()?.create(RetrofitApiInteface::class.java)
+
+        val call: Call<List<UserProfile>> = apiService?.getTeachers()!!
+        call.enqueue(object : Callback<List<UserProfile>> {
+            override fun onResponse(call: Call<List<UserProfile>>, response: Response<List<UserProfile>>) {
+                if (response.isSuccessful && response.body() != null)
+                    retrofitCallback.onResponse(response.body())
+            }
+
+            override fun onFailure(call: Call<List<UserProfile>>, t: Throwable) {
+                Toast.makeText(eventsActivity, t.message, Toast.LENGTH_SHORT).show()
+            }
+        })
+    }
+
 }

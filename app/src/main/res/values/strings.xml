@@ -93,4 +93,23 @@
     <string name="account_delete_message">Account deleted, please contact admin to create new</string>
     <string name="addAdmin">Add Admin</string>
     <string name="addCource">Add Course</string>
+    <string name="upload">Upload</string>
+    <string name="add_material">Add Material</string>
+    <string name="choose_class">Choose class</string>
+    <string name="select_class">Please select class</string>
+    <string name="select_file">Select File</string>
+    <string name="file_update_success">Uploaded Successfully</string>
+    <string name="file_update_failed">Upload failed</string>
+    <string name="first_class">1st Class</string>
+    <string name="sec_class">2nd Class</string>
+    <string name="third_class">3rd Class</string>
+    <string name="four_class">4th Class</string>
+    <string name="five_class">5th Class</string>
+    <string name="six_class">6th Class</string>
+    <string name="seven_class">7th Class</string>
+    <string name="eight_class">8th Class</string>
+    <string name="nine_class">9th Class</string>
+    <string name="ten_class">10th Class</string>
+    <string name="file_desc">File Description</string>
+    <string name="enter_desc">Please enter description</string>
 </resources>

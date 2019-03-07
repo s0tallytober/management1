@@ -64,7 +64,8 @@ class CreateStudentTeacherActivity : AppCompatActivity() {
             if (!validateDetails()) {
                 progressBarAdd.visibility = View.VISIBLE
                 mAuth.createUserWithEmailAndPassword(etAddEmail.text.toString(), etAddPassword.text.toString())
-                    .addOnCompleteListener(this@CreateStudentTeacherActivity
+                    .addOnCompleteListener(
+                        this@CreateStudentTeacherActivity
                     ) { task ->
                         if (task.isSuccessful) {
                             addOtherDetails(mAuth.currentUser)
@@ -98,7 +99,23 @@ class CreateStudentTeacherActivity : AppCompatActivity() {
                                 override fun positiveClick() {
                                     mAuth.signOut()
                                     reSignIn()
-                                    ServiceAddUser.addUser(this@CreateStudentTeacherActivity,profileData)
+                                    user.let {
+                                        when (user) {
+                                            Constants.teacher -> {
+                                                ServiceAddUser.addTeacher(
+                                                    this@CreateStudentTeacherActivity,
+                                                    profileData
+                                                )
+                                            }
+
+                                            Constants.studnet -> {
+                                                ServiceAddUser.addStudent(
+                                                    this@CreateStudentTeacherActivity,
+                                                    profileData
+                                                )
+                                            }
+                                        }
+                                    }
                                 }
                             }
                         )

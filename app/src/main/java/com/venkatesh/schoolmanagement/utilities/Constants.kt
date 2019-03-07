@@ -1,5 +1,6 @@
 package com.venkatesh.schoolmanagement.utilities
 
+import com.venkatesh.schoolmanagement.model.MaterialUpload
 import com.venkatesh.schoolmanagement.model.SMSEvent
 import com.venkatesh.schoolmanagement.model.UserProfile
 
@@ -24,6 +25,21 @@ object Constants {
     const val events = "events"
     const val event_images = "event_images"
     var eventsList: ArrayList<SMSEvent> = arrayListOf()
+    var firstMaterial: ArrayList<MaterialUpload> = arrayListOf()
+    var secMaterial: ArrayList<MaterialUpload> = arrayListOf()
+    var thirdMaterial: ArrayList<MaterialUpload> = arrayListOf()
+    var fourthMaterial: ArrayList<MaterialUpload> = arrayListOf()
+    var fifthMaterial: ArrayList<MaterialUpload> = arrayListOf()
+    var sixthMaterial: ArrayList<MaterialUpload> = arrayListOf()
+    var seventhMaterial: ArrayList<MaterialUpload> = arrayListOf()
+    var eightMaterial: ArrayList<MaterialUpload> = arrayListOf()
+    var nineMaterial: ArrayList<MaterialUpload> = arrayListOf()
+    var tenMaterial: ArrayList<MaterialUpload> = arrayListOf()
     const val REQUEST_CODE = 101
-    const val students="students"
+    const val students = "students"
+    var studentsData: ArrayList<UserProfile> = arrayListOf()
+    var teachersData: ArrayList<UserProfile> = arrayListOf()
+
+    const val materials = "materials"
+
 }

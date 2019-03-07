@@ -1,5 +1,6 @@
 package com.venkatesh.schoolmanagement
 
+import android.app.Activity
 import android.app.IntentService
 import android.content.Context
 import android.content.Intent
@@ -7,12 +8,14 @@ import android.os.Bundle
 import android.widget.Toast
 import com.google.firebase.database.FirebaseDatabase
 import com.venkatesh.schoolmanagement.model.UserProfile
+import com.venkatesh.schoolmanagement.utilities.Commons
 import com.venkatesh.schoolmanagement.utilities.Constants
+import com.venkatesh.schoolmanagement.utilities.DialogCallback
 
 // TODO: Rename actions, choose action names that describe tasks that this
 // IntentService can perform, e.g. ACTION_FETCH_NEW_ITEMS
-private const val ACTION_ADD_USER = "com.venkatesh.schoolmanagement.action.ADD_USER"
-private const val ACTION_BAZ = "com.venkatesh.schoolmanagement.action.BAZ"
+private const val ACTION_ADD_STUDENT = "com.venkatesh.schoolmanagement.action.ADD_STUDENT"
+private const val ACTION_ADD_TEACHER = "com.venkatesh.schoolmanagement.action.ADD_TEACHER"
 
 // TODO: Rename parameters
 private const val EXTRA_PARAM1 = "com.venkatesh.schoolmanagement.extra.PARAM1"
@@ -28,9 +31,14 @@ class ServiceAddUser : IntentService("ServiceAddUser") {
 
     override fun onHandleIntent(intent: Intent?) {
         when (intent?.action) {
-            ACTION_ADD_USER -> {
-                val param1 = intent.getStringExtra(EXTRA_PARAM1) as UserProfile
-                addUser(param1)
+            ACTION_ADD_STUDENT -> {
+                val param1 = intent.getSerializableExtra(EXTRA_PARAM1) as UserProfile
+                addStudent(param1, Constants.students)
+            }
+
+            ACTION_ADD_TEACHER -> {
+                val param1 = intent.getSerializableExtra(EXTRA_PARAM1) as UserProfile
+                addTeacher(param1, Constants.teacher)
             }
         }
     }
@@ -39,8 +47,9 @@ class ServiceAddUser : IntentService("ServiceAddUser") {
      * Handle action Foo in the provided background thread with the provided
      * parameters.
      */
-    private fun addUser(param1: UserProfile) {
-        FirebaseDatabase.getInstance().reference.child(Constants.students).push().setValue(param1)
+    private fun addStudent(param1: UserProfile, tabelName: String) {
+/*
+        FirebaseDatabase.getInstance().reference.child(tabelName).push().setValue(param1)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     Toast.makeText(applicationContext, "User added success", Toast.LENGTH_SHORT).show()
@@ -48,7 +57,38 @@ class ServiceAddUser : IntentService("ServiceAddUser") {
                     Toast.makeText(applicationContext, "User added fail", Toast.LENGTH_SHORT).show()
                 }
             }
+*/
+        Constants.studentsData.add(param1)
+        FirebaseDatabase.getInstance().reference.child(tabelName).setValue(Constants.studentsData)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(applicationContext, "User added success", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(applicationContext, "User added fail", Toast.LENGTH_SHORT).show()
+                }
+            }
+    }
 
+    private fun addTeacher(param1: UserProfile, tabelName: String) {
+/*
+        FirebaseDatabase.getInstance().reference.child(tabelName).push().setValue(param1)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(applicationContext, "User added success", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(applicationContext, "User added fail", Toast.LENGTH_SHORT).show()
+                }
+            }
+*/
+        Constants.teachersData.add(param1)
+        FirebaseDatabase.getInstance().reference.child(tabelName).setValue(Constants.teachersData)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Toast.makeText(applicationContext, "User added success", Toast.LENGTH_SHORT).show()
+                } else {
+                    Toast.makeText(applicationContext, "User added fail", Toast.LENGTH_SHORT).show()
+                }
+            }
     }
 
     companion object {
@@ -60,16 +100,25 @@ class ServiceAddUser : IntentService("ServiceAddUser") {
          */
         // TODO: Customize helper method
         @JvmStatic
-        fun addUser(context: Context, userProfile: UserProfile) {
-            val intent = Intent(context, ServiceAddUser::class.java).apply {
-                action = ACTION_ADD_USER
-                Bundle().apply {
-                    putSerializable(EXTRA_PARAM1, userProfile)
-                }
+        fun addStudent(context: Context, userProfile: UserProfile) {
+            val intent = Intent(context, ServiceAddUser::class.java)
 
-            }
+            intent.action = ACTION_ADD_STUDENT
+            intent.putExtras(Bundle().apply {
+                putSerializable(EXTRA_PARAM1, userProfile)
+            })
             context.startService(intent)
         }
 
+        @JvmStatic
+        fun addTeacher(context: Context, userProfile: UserProfile) {
+            val intent = Intent(context, ServiceAddUser::class.java)
+
+            intent.action = ACTION_ADD_TEACHER
+            intent.putExtras(Bundle().apply {
+                putSerializable(EXTRA_PARAM1, userProfile)
+            })
+            context.startService(intent)
+        }
     }
 }

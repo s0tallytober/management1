@@ -3,9 +3,11 @@ package com.venkatesh.schoolmanagement.utilities
 import android.app.AlertDialog
 import android.content.Context
 import android.graphics.Color
+import android.net.Uri
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.ForegroundColorSpan
+import android.webkit.MimeTypeMap
 import java.util.*
 
 
@@ -68,6 +70,13 @@ object Commons {
     }
 
     fun getCurrentDateTime(): String? {
-       return java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+        return java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
     }
+
+    fun getExtensionFromUri(context: Context, uri: Uri): String? {
+        val contentResolver = context.contentResolver
+        val mimeTypeMap = MimeTypeMap.getSingleton()
+        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri))
+    }
+
 }
