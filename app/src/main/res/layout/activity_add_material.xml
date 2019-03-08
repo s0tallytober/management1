@@ -10,7 +10,15 @@
         android:padding="@dimen/_10dp"
         tools:context=".activity.admin.AddMaterialActivity">
 
+    <ProgressBar
+            android:layout_centerInParent="true"
+            android:id="@+id/progressBarCP"
+            android:layout_width="@dimen/_30dp"
+            android:layout_height="@dimen/_30dp"
+            android:visibility="gone"/>
+
     <Spinner
+            android:visibility="gone"
             android:paddingBottom="@dimen/_5dp"
             android:id="@+id/mySpinner"
             style="@style/Base.Widget.AppCompat.Spinner.Underlined"
@@ -30,11 +38,13 @@
                 android:layout_alignParentLeft="true"
                 android:layout_toLeftOf="@+id/uploadBtn"
                 android:id="@+id/fileName"
+                android:textColor="@color/white"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
 
         <Button
-                android:fontFamily="@font/poppins_light"
+                android:layout_centerVertical="true"
+                android:fontFamily="@font/poppins_regular"
                 android:background="@color/colorAccent"
                 android:textAllCaps="false"
                 android:text="@string/upload"
@@ -78,12 +88,5 @@
             android:text="@string/add_material"
             android:textColor="@android:color/black"/>
 
-    <ProgressBar
-            android:id="@+id/progressBarCP"
-            android:layout_width="@dimen/_30dp"
-            android:layout_height="@dimen/_30dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/_20dp"
-            android:visibility="gone"/>
 
 </RelativeLayout>

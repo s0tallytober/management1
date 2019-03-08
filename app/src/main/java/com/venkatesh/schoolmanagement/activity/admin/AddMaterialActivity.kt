@@ -35,22 +35,14 @@ class AddMaterialActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add_material)
-        title = getString(R.string.add_material)
+        if (intent.hasExtra(Constants.materials)) {
+            selected = intent.getStringExtra(Constants.materials)
+            title = selected
+        } else
+            title = getString(R.string.add_material)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        val myStrings = arrayOf(
-            getString(R.string.choose_class),
-            getString(R.string.first_class),
-            getString(R.string.sec_class),
-            getString(R.string.third_class),
-            getString(R.string.four_class),
-            getString(R.string.five_class),
-            getString(R.string.six_class),
-            getString(R.string.seven_class),
-            getString(R.string.eight_class),
-            getString(R.string.nine_class),
-            getString(R.string.ten_class)
-        )
+        val myStrings = Constants.getClasses(this)
 
         //Adapter for spinner
         mySpinner.adapter = ArrayAdapter(this, android.R.layout.simple_spinner_dropdown_item, myStrings)
@@ -84,7 +76,7 @@ class AddMaterialActivity : AppCompatActivity() {
     }
 
     private fun validations(): String {
-        if (selected == getString(R.string.choose_class)) {
+        if (mySpinner.visibility == View.VISIBLE && selected == getString(R.string.choose_class)) {
             return getString(R.string.select_class)
         } else if (fileName.text.toString() == "") {
             return getString(R.string.select_file)
@@ -103,30 +95,6 @@ class AddMaterialActivity : AppCompatActivity() {
         progressBarCP.visibility = View.GONE
     }
 
-
-    private fun uploadDocument() {
-        showProgressBar()
-
-
-        val mStorageReference = FirebaseStorage.getInstance().getReference(Constants.materials)
-        fileUrl?.let {
-            val fileReference =
-                mStorageReference.child("${System.currentTimeMillis()}.${getExtensionFromUri(this, it)}")
-            val uploadTask = fileReference.putFile(it)
-            uploadTask.continueWithTask(object : Continuation<UploadTask.TaskSnapshot, Task<Uri>> {
-                override fun then(task: Task<UploadTask.TaskSnapshot>): Task<Uri>? {
-                    if (!task.isSuccessful) {
-                        throw task.exception!!
-                    }
-                    return fileReference.downloadUrl
-                }
-            }).addOnCompleteListener {
-                downloadUrl = it.result.toString()
-                addMaterial()
-            }
-        }
-
-    }
 
     private fun addMaterial() {
 
@@ -179,7 +147,8 @@ class AddMaterialActivity : AppCompatActivity() {
             etAddDescription.text.toString(),
             Commons.getCurrentDateTime()!!,
             Constants.userProfile!!.userName,
-            Constants.userProfile!!.userId
+            Constants.userProfile!!.userId,
+            selected.toString()
         )
         data.add(event)
         val mDatabaseReference = FirebaseDatabase.getInstance().reference
@@ -224,11 +193,10 @@ class AddMaterialActivity : AppCompatActivity() {
     }
 
     private fun callFilePicker() {
-        intent.action = Intent.ACTION_OPEN_DOCUMENT
-        intent.addCategory(Intent.CATEGORY_OPENABLE)
-        val mimetypes = arrayOf("*/*")
-        intent.putExtra(Intent.EXTRA_MIME_TYPES, mimetypes)
-        startActivityForResult(intent, Constants.REQUEST_CODE);
+        val intent = Intent()
+        intent.action = Intent.ACTION_GET_CONTENT
+        intent.type = "application/pdf"
+        startActivityForResult(intent, 301);
     }
 
     private fun getPermissions() {
@@ -278,8 +246,30 @@ class AddMaterialActivity : AppCompatActivity() {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         data?.let {
-            if (requestCode == Constants.RESULT_LOAD_IMAGE && resultCode == RESULT_OK) {
+            if (requestCode == 301 && resultCode == RESULT_OK) {
                 fileUrl = it.data
+                fileName.setText(fileUrl.toString())
+            }
+        }
+    }
+
+    private fun uploadDocument() {
+        showProgressBar()
+        val mStorageReference = FirebaseStorage.getInstance().getReference(Constants.materials)
+        fileUrl?.let {
+            val fileReference =
+                mStorageReference.child("${System.currentTimeMillis()}.${getExtensionFromUri(this, it)}")
+            val uploadTask = fileReference.putFile(it)
+            uploadTask.continueWithTask(object : Continuation<UploadTask.TaskSnapshot, Task<Uri>> {
+                override fun then(task: Task<UploadTask.TaskSnapshot>): Task<Uri>? {
+                    if (!task.isSuccessful) {
+                        throw task.exception!!
+                    }
+                    return fileReference.downloadUrl
+                }
+            }).addOnCompleteListener {
+                downloadUrl = it.result.toString()
+                addMaterial()
             }
         }
     }

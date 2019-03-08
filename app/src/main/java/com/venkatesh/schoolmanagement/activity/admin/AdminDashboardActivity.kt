@@ -27,8 +27,7 @@ class AdminDashboardActivity : BaseActivity(), BaseActivityToChildActivity {
         mAuth = FirebaseAuth.getInstance()
         super.attachInstance(this)
         creatingActionsInGridView() // Preparing list of actions on main screen
-
-       // displayProfile()
+        displayProfile()
     }
 
     private fun creatingActionsInGridView() {
@@ -37,7 +36,7 @@ class AdminDashboardActivity : BaseActivity(), BaseActivityToChildActivity {
                 getString(R.string.student),
                 getString(R.string.teacher),
                 getString(R.string.addAdmin),
-                getString(R.string.add_material),
+                getString(R.string.materials),
                 getString(R.string.addCource),
                 getString(R.string.events)
             )
