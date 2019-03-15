@@ -2,6 +2,7 @@ package com.venkatesh.schoolmanagement.activity.student
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Menu
 import com.google.firebase.auth.FirebaseAuth
 import com.venkatesh.schoolmanagement.ApiClient
 import com.venkatesh.schoolmanagement.BaseActivityToChildActivity
@@ -31,6 +32,13 @@ class StudentDashboardActivity : BaseActivity(), BaseActivityToChildActivity {
         initializeRecyclerView()
         getEventsFromFirebase()
     }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        val materials = menu?.findItem(R.id.materials)
+        materials?.isVisible = true
+        return true
+    }
+
 
     private fun initializeRecyclerView() {
         recycleView.layoutManager = LinearLayoutManager(this)

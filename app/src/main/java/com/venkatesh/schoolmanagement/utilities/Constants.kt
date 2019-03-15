@@ -45,6 +45,7 @@ object Constants {
     var teachersData: ArrayList<UserProfile> = arrayListOf()
 
     const val materials = "materials"
+    const val profile="profile"
 
     fun getClasses(context: Context): Array<String> {
         return arrayOf(

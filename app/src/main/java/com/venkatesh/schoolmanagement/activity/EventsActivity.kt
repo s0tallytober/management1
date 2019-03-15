@@ -40,10 +40,11 @@ class EventsActivity : AppCompatActivity() {
             override fun onResponse(any: Any) {
                 list.clear()
                 list = any as ArrayList<SMSEvent>
+                list.reverse()
                 adapter.updateData(list)
                 Constants.eventsList = list
-                recyclerViewEvents.scrollToPosition(list.size)
-                recyclerViewEvents.smoothScrollToPosition(list.size)
+                // recyclerViewEvents.scrollToPosition(list.size)
+                //recyclerViewEvents.smoothScrollToPosition(list.size)
             }
         })
     }
@@ -51,7 +52,7 @@ class EventsActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         fabAddEvent.setOnClickListener {
-            startActivityForResult(Intent(this@EventsActivity, AddEventActivity::class.java),Constants.REQUEST_CODE)
+            startActivityForResult(Intent(this@EventsActivity, AddEventActivity::class.java), Constants.REQUEST_CODE)
         }
     }
 
@@ -67,7 +68,7 @@ class EventsActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
 
         data.let {
-            if (requestCode==Constants.REQUEST_CODE){
+            if (requestCode == Constants.REQUEST_CODE) {
                 getEventsFromFirebase()
             }
         }

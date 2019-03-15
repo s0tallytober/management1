@@ -83,7 +83,7 @@ class ChatActivity : AppCompatActivity() {
         super.onStart()
         fabSendChat.setOnClickListener {
             val chatMessage=ChatMessage(etChat.text.toString(),
-                Constants?.userProfile?.userName!!,
+                Constants.userProfile?.userName!!,
                 Commons.getCurrentDateTime()!!,
                 Constants.userProfile?.userId!!
             )

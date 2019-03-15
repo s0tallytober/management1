@@ -2,6 +2,7 @@ package com.venkatesh.schoolmanagement.activity.teacher
 
 import android.os.Bundle
 import android.support.v7.widget.LinearLayoutManager
+import android.view.Menu
 import com.google.firebase.auth.FirebaseAuth
 import com.venkatesh.schoolmanagement.ApiClient
 import com.venkatesh.schoolmanagement.BaseActivityToChildActivity
@@ -27,7 +28,7 @@ class TeacherDashboardActivity : BaseActivity(), BaseActivityToChildActivity {
         setContentView(R.layout.activity_student_dashboard)
         super.attachInstance(this)
         mAuth = FirebaseAuth.getInstance()
-        title=getString(R.string.teacher_dashboard)
+        title = getString(R.string.teacher_dashboard)
         initializeRecyclerView()
         getEventsFromFirebase()
     }
@@ -36,6 +37,12 @@ class TeacherDashboardActivity : BaseActivity(), BaseActivityToChildActivity {
         recycleView.layoutManager = LinearLayoutManager(this)
         adapter = EventsAdapter(this@TeacherDashboardActivity, list)
         recycleView.adapter = adapter
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu?): Boolean {
+        val materials = menu?.findItem(R.id.materials)
+        materials?.isVisible = true
+        return true
     }
 
     private fun getEventsFromFirebase() {

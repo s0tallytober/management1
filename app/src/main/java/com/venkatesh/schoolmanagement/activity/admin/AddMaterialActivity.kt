@@ -5,11 +5,10 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
-import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v4.content.ContextCompat
+import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
 import android.widget.AdapterView
@@ -21,7 +20,6 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.UploadTask
 import com.venkatesh.schoolmanagement.R
 import com.venkatesh.schoolmanagement.model.MaterialUpload
-import com.venkatesh.schoolmanagement.model.SMSEvent
 import com.venkatesh.schoolmanagement.utilities.Commons
 import com.venkatesh.schoolmanagement.utilities.Commons.getExtensionFromUri
 import com.venkatesh.schoolmanagement.utilities.Constants
@@ -76,14 +74,14 @@ class AddMaterialActivity : AppCompatActivity() {
     }
 
     private fun validations(): String {
-        if (mySpinner.visibility == View.VISIBLE && selected == getString(R.string.choose_class)) {
-            return getString(R.string.select_class)
+        return if (mySpinner.visibility == View.VISIBLE && selected == getString(R.string.choose_class)) {
+            getString(R.string.select_class)
         } else if (fileName.text.toString() == "") {
-            return getString(R.string.select_file)
+            getString(R.string.select_file)
         } else if (etAddDescription.text.toString() == "") {
-            return getString(R.string.enter_desc)
+            getString(R.string.enter_desc)
         } else {
-            return ""
+            ""
         }
     }
 
@@ -152,7 +150,7 @@ class AddMaterialActivity : AppCompatActivity() {
         )
         data.add(event)
         val mDatabaseReference = FirebaseDatabase.getInstance().reference
-        mDatabaseReference.child(tableName).setValue(data)
+        mDatabaseReference.child(Constants.materials).child(tableName).setValue(data)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
                     hideProgressBar()
@@ -196,7 +194,7 @@ class AddMaterialActivity : AppCompatActivity() {
         val intent = Intent()
         intent.action = Intent.ACTION_GET_CONTENT
         intent.type = "application/pdf"
-        startActivityForResult(intent, 301);
+        startActivityForResult(intent, 301)
     }
 
     private fun getPermissions() {

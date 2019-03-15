@@ -14,7 +14,6 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import android.webkit.MimeTypeMap
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.android.gms.tasks.Continuation
@@ -30,7 +29,6 @@ import com.venkatesh.schoolmanagement.R
 import com.venkatesh.schoolmanagement.model.UserProfile
 import com.venkatesh.schoolmanagement.utilities.Commons
 import com.venkatesh.schoolmanagement.utilities.Constants
-import com.venkatesh.schoolmanagement.utilities.Constants.RESULT_LOAD_IMAGE
 import com.venkatesh.schoolmanagement.utilities.DialogCallback
 import kotlinx.android.synthetic.main.activity_profile.*
 
@@ -164,7 +162,7 @@ class ProfileActivity : AppCompatActivity() {
                 gender,
                 sharedPreferences.getString(Constants.role, ""),
                 it,
-                downloadUrl.toString()
+                (if (downloadUrl != null) downloadUrl else Constants.userProfile?.url.toString())!!
             )
         }
     }
@@ -222,21 +220,25 @@ class ProfileActivity : AppCompatActivity() {
     private fun uploadImage() {
         showProgressBar()
         val mStorageReference = FirebaseStorage.getInstance().getReference(Constants.profile_images)
-        filePath?.let {
-            val fileReference =
-                mStorageReference.child("${System.currentTimeMillis()}.${Commons.getExtensionFromUri(this, it)}")
-            val uploadTask = fileReference.putFile(it)
-            uploadTask.continueWithTask(object : Continuation<UploadTask.TaskSnapshot, Task<Uri>> {
-                override fun then(task: Task<UploadTask.TaskSnapshot>): Task<Uri>? {
-                    if (!task.isSuccessful) {
-                        throw task.exception!!
+        if (filePath != null) {
+            filePath?.let {
+                val fileReference =
+                    mStorageReference.child("${System.currentTimeMillis()}.${Commons.getExtensionFromUri(this, it)}")
+                val uploadTask = fileReference.putFile(it)
+                uploadTask.continueWithTask(object : Continuation<UploadTask.TaskSnapshot, Task<Uri>> {
+                    override fun then(task: Task<UploadTask.TaskSnapshot>): Task<Uri>? {
+                        if (!task.isSuccessful) {
+                            throw task.exception!!
+                        }
+                        return fileReference.downloadUrl
                     }
-                    return fileReference.downloadUrl
+                }).addOnCompleteListener {
+                    downloadUrl = it.result.toString()
+                    getProfileDataFromUi()?.let { it1 -> updateProfile(it1) }
                 }
-            }).addOnCompleteListener {
-                downloadUrl = it.result.toString()
-                getProfileDataFromUi()?.let { it1 -> updateProfile(it1) }
             }
+        } else {
+            getProfileDataFromUi()?.let { it1 -> updateProfile(it1) }
         }
 
     }
@@ -258,52 +260,6 @@ class ProfileActivity : AppCompatActivity() {
 
             }
         }
-    }
-
-    private fun uploadImage(filePath: Uri?) {
-        showProgressBar()
-        val mStorageReference = FirebaseStorage.getInstance().getReference(Constants.profile_images)
-        /* filePath?.let {
-             val fileReference =
-                 mStorageReference.child("${System.currentTimeMillis()}.${getExtensionFromUri(it)}")
-
-             fileReference.putFile(it)
-                 .addOnSuccessListener(OnSuccessListener<UploadTask.TaskSnapshot> { taskSnapshot ->
-                     // Get a URL to the uploaded content
-                     downloadUrl = fileReference.downloadUrl.result.toString()
-                     getProfileDataFromUi()?.let { it1 -> updateProfile(it1) }
-                 })
-                 .addOnFailureListener(OnFailureListener {
-                     // Handle unsuccessful uploaimgProfileds
-                     Toast.makeText(this, "$it", Toast.LENGTH_LONG).show()
-                 })
-
-         }*/
-
-        filePath?.let {
-            val fileReference =
-                mStorageReference.child("${System.currentTimeMillis()}.${getExtensionFromUri(it)}")
-            val uploadTask = fileReference.putFile(it)
-            uploadTask.continueWithTask(object : Continuation<UploadTask.TaskSnapshot, Task<Uri>> {
-                override fun then(task: Task<UploadTask.TaskSnapshot>): Task<Uri>? {
-                    if (!task.isSuccessful) {
-                        throw task.exception!!
-                    }
-                    return fileReference.downloadUrl
-                }
-            }).addOnCompleteListener {
-                progressBarCP.visibility = View.GONE
-                downloadUrl = it.result.toString()
-                //getProfileDataFromUi()?.let { it1 -> updateProfile(it1) }
-            }
-        }
-
-    }
-
-    private fun getExtensionFromUri(uri: Uri): String? {
-        val contentResolver = contentResolver
-        val mimeTypeMap = MimeTypeMap.getSingleton()
-        return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri))
     }
 
     override fun onRequestPermissionsResult(

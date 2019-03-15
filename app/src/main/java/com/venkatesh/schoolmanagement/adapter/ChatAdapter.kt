@@ -8,7 +8,7 @@ import android.widget.TextView
 import com.venkatesh.schoolmanagement.R
 import com.venkatesh.schoolmanagement.model.ChatMessage
 
-class ChatAdapter(var chats: List<ChatMessage>) : RecyclerView.Adapter<ChatViewHolder>() {
+class ChatAdapter(private var chats: List<ChatMessage>) : RecyclerView.Adapter<ChatViewHolder>() {
     override fun onCreateViewHolder(p0: ViewGroup, p1: Int): ChatViewHolder {
         return ChatViewHolder(LayoutInflater.from(p0.context).inflate(R.layout.adapter_item_chat, p0, false))
     }
@@ -32,7 +32,7 @@ class ChatAdapter(var chats: List<ChatMessage>) : RecyclerView.Adapter<ChatViewH
 }
 
 class ChatViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-    val message_user = view.findViewById<TextView>(R.id.message_user)
-    val message_text = view.findViewById<TextView>(R.id.message_text)
-    val message_time = view.findViewById<TextView>(R.id.message_time)
+    val message_user: TextView = view.findViewById<TextView>(R.id.message_user)
+    val message_text: TextView = view.findViewById<TextView>(R.id.message_text)
+    val message_time: TextView = view.findViewById<TextView>(R.id.message_time)
 }

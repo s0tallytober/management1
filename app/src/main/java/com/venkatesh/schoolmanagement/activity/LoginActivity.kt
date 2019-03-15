@@ -66,7 +66,7 @@ class LoginActivity : AppCompatActivity() {
         if (validateLogin()) {
             progressBar.visibility = View.VISIBLE
             mAuth.signInWithEmailAndPassword(etEmail.text.toString(), etPassword.text.toString())
-                .addOnCompleteListener(this, { task ->
+                .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                         val user = mAuth.currentUser
                         getProfile(user)
@@ -77,7 +77,7 @@ class LoginActivity : AppCompatActivity() {
                             message = getString(R.string.email_not_exist)
                         )
                     }
-                })
+                }
         }
     }
 

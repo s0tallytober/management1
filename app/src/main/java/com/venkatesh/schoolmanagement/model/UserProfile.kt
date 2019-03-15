@@ -8,6 +8,7 @@ data class UserProfile(
     var gender: String = "",
     var role: String = "",
     var userId: String = "",
-    var url: String = ""
-):Serializable
+    var url: String = "",
+    var className: String = ""
+) : Serializable
 

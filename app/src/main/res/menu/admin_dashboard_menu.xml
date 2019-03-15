@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Common menu for user dashboards-->
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/updateProfile" android:title="@string/profile"/>
-    <item android:id="@+id/chgPassword" android:title="@string/change_password"/>
     <item android:id="@+id/groupChat" android:title="@string/groupchat"/>
+    <item android:id="@+id/materials" android:title="@string/materials" android:visible="false"/>
+    <item android:id="@+id/updateProfile" android:title="@string/profile"/>
     <item android:id="@+id/deleteAccount" android:title="@string/delete_account"/>
+    <item android:id="@+id/chgPassword" android:title="@string/change_password"/>
     <item android:id="@+id/logout" android:title="@string/logout"/>
 </menu>

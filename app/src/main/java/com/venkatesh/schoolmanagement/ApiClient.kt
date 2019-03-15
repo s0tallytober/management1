@@ -9,6 +9,7 @@ import com.venkatesh.schoolmanagement.model.ChatMessage
 import com.venkatesh.schoolmanagement.model.MaterialUpload
 import com.venkatesh.schoolmanagement.model.SMSEvent
 import com.venkatesh.schoolmanagement.model.UserProfile
+import com.venkatesh.schoolmanagement.utilities.Constants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -23,10 +24,10 @@ import java.io.File.separator
 
 object ApiClient {
 
-    val BASE_URL = "https://school-management-system-27ab4.firebaseio.com/"
+    private const val BASE_URL = "https://school-management-system-27ab4.firebaseio.com/"
     private var retrofit: Retrofit? = null
 
-    fun getClient(): Retrofit? {
+    private fun getClient(): Retrofit? {
         if (retrofit == null) {
 
             val logging = HttpLoggingInterceptor()
@@ -119,7 +120,7 @@ object ApiClient {
     fun getClassMaterials(context: Context, api: String, retrofitCallback: RetrofitCallback) {
         val apiService = getClient()?.create(RetrofitApiInteface::class.java)
 
-        val call: Call<List<MaterialUpload>> = apiService?.getClassMaterials(api)!!
+        val call: Call<List<MaterialUpload>> = apiService?.getClassMaterials(Constants.materials + "/" + api)!!
         call.enqueue(object : Callback<List<MaterialUpload>> {
             override fun onResponse(call: Call<List<MaterialUpload>>, response: Response<List<MaterialUpload>>) {
                 if (response.isSuccessful && response.body() != null)
@@ -185,14 +186,14 @@ object ApiClient {
                         break
                     }
 
-                    outputStream!!.write(fileReader, 0, read)
+                    outputStream.write(fileReader, 0, read)
 
                     fileSizeDownloaded += read.toLong()
 
                     Log.d(ApiClient::class.java.simpleName, "file download: $fileSizeDownloaded of $fileSize")
                 }
 
-                outputStream!!.flush()
+                outputStream.flush()
 
                 Toast.makeText(
                     context,
@@ -205,11 +206,11 @@ object ApiClient {
                 return false
             } finally {
                 if (inputStream != null) {
-                    inputStream!!.close()
+                    inputStream.close()
                 }
 
                 if (outputStream != null) {
-                    outputStream!!.close()
+                    outputStream.close()
                 }
             }
         } catch (e: IOException) {

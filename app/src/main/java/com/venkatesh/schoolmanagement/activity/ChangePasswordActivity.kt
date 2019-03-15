@@ -48,7 +48,7 @@ class ChangePasswordActivity : AppCompatActivity() {
                 } else {
                     progressBarCP.visibility = View.VISIBLE
                     user.updatePassword(etConfNewPassword.text.toString())
-                        .addOnCompleteListener({ task ->
+                        .addOnCompleteListener { task ->
                             if (task.isSuccessful) {
                                 Commons.showAlertDialog(
                                     context = this@ChangePasswordActivity,
@@ -67,7 +67,7 @@ class ChangePasswordActivity : AppCompatActivity() {
                                     }
                                 )
                             }
-                        })
+                        }
                 }
             }
         }

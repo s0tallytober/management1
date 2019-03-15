@@ -19,11 +19,6 @@ import com.venkatesh.schoolmanagement.model.MaterialUpload
 import com.venkatesh.schoolmanagement.utilities.Constants
 import kotlinx.android.synthetic.main.fragment_material.*
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
 /**
  * A simple [Fragment] subclass.
  *
@@ -42,7 +37,7 @@ class MaterialFragment : Fragment() {
         super.onCreate(savedInstanceState)
         arguments?.let {
             it.containsKey(Constants.materials).apply {
-                if (this!!) {
+                if (this) {
                     material = it.getString(Constants.materials)
                 }
             }
@@ -59,11 +54,13 @@ class MaterialFragment : Fragment() {
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+        if (Constants.userProfile?.role == Constants.studnet)
+            addMaterial.visibility = View.GONE
 
         addMaterial.setOnClickListener {
             val intent = Intent(activity, AddMaterialActivity::class.java)
             intent.putExtra(Constants.materials, material)
-            startActivityForResult(intent,601)
+            startActivityForResult(intent, 601)
         }
 
         recyclerViewMaterials.layoutManager = LinearLayoutManager(activity)
@@ -216,13 +213,13 @@ class MaterialFragment : Fragment() {
         }
 
         inner class MaterialViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-            val fileTitle = view.findViewById<TextView>(R.id.fileTitle)
-            val fileDownload = view.findViewById<ImageView>(R.id.fileDownload)
+            val fileTitle: TextView = view.findViewById<TextView>(R.id.fileTitle)
+            val fileDownload: ImageView = view.findViewById<ImageView>(R.id.fileDownload)
         }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode==601){
+        if (requestCode == 601) {
             loadClassWiseMaterials()
         }
     }

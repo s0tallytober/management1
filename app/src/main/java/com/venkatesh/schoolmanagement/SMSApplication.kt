@@ -11,14 +11,22 @@ import com.venkatesh.schoolmanagement.volley.LruBitmapCache
 
 class SMSApplication : Application() {
 
-    val TAG = SMSApplication::class.java.simpleName
+    private val TAG: String = SMSApplication::class.java.simpleName
     private var mRequestQueue: RequestQueue? = null
     private var mImageLoader: ImageLoader? = null
     private var mInstance: SMSApplication? = null
 
+    companion object {
+        lateinit var smsApplication: SMSApplication
+        fun getInstance() {
+            smsApplication
+        }
+    }
+
     override fun onCreate() {
         super.onCreate()
         mInstance = this
+        smsApplication = this
         FirebaseApp.initializeApp(applicationContext)
     }
 
@@ -27,7 +35,7 @@ class SMSApplication : Application() {
         return mInstance
     }
 
-    fun getRequestQueue(): RequestQueue? {
+    private fun getRequestQueue(): RequestQueue? {
         if (mRequestQueue == null) {
             mRequestQueue = Volley.newRequestQueue(applicationContext)
         }
@@ -47,12 +55,12 @@ class SMSApplication : Application() {
 
     fun <T> addToRequestQueue(req: Request<T>, tag: String) {
         // set the default tag if tag is empty
-        req.setTag(if (TextUtils.isEmpty(tag)) TAG else tag)
+        req.tag = if (TextUtils.isEmpty(tag)) TAG else tag
         getRequestQueue()?.add(req)
     }
 
     fun <T> addToRequestQueue(req: Request<T>) {
-        req.setTag(TAG)
+        req.tag = TAG
         getRequestQueue()?.add(req)
     }
 

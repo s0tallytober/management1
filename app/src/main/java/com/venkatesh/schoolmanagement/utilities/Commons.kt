@@ -70,7 +70,7 @@ object Commons {
     }
 
     fun getCurrentDateTime(): String? {
-        return java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().getTime());
+        return java.text.DateFormat.getDateTimeInstance().format(Calendar.getInstance().time)
     }
 
     fun getExtensionFromUri(context: Context, uri: Uri): String? {

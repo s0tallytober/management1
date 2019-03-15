@@ -1,6 +1,5 @@
 package com.venkatesh.schoolmanagement
 
-import android.app.Activity
 import android.app.IntentService
 import android.content.Context
 import android.content.Intent
@@ -8,9 +7,7 @@ import android.os.Bundle
 import android.widget.Toast
 import com.google.firebase.database.FirebaseDatabase
 import com.venkatesh.schoolmanagement.model.UserProfile
-import com.venkatesh.schoolmanagement.utilities.Commons
 import com.venkatesh.schoolmanagement.utilities.Constants
-import com.venkatesh.schoolmanagement.utilities.DialogCallback
 
 // TODO: Rename actions, choose action names that describe tasks that this
 // IntentService can perform, e.g. ACTION_FETCH_NEW_ITEMS
