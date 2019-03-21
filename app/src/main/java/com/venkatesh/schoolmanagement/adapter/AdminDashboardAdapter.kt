@@ -58,10 +58,6 @@ class AdminDashboardAdapter(val context: Context, private val actionsList: List<
                     }
 
                     4 -> {
-
-                    }
-
-                    5 -> {
                         val intent = Intent(context, EventsActivity::class.java)
                         context.startActivity(intent)
                     }

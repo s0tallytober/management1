@@ -28,7 +28,6 @@ class AdminDashboardActivity : BaseActivity(), BaseActivityToChildActivity {
                 getString(R.string.teacher),
                 getString(R.string.addAdmin),
                 getString(R.string.materials),
-                getString(R.string.addCource),
                 getString(R.string.events)
             )
         val adapter = AdminDashboardAdapter(this, actionsList)

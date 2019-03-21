@@ -79,4 +79,11 @@ object Commons {
         return mimeTypeMap.getExtensionFromMimeType(contentResolver.getType(uri))
     }
 
+    fun getRandomNumber(): Int {
+        val min = 10
+        val max = 100
+
+        val r = Random()
+        return r.nextInt(max - min + 1) + min
+    }
 }

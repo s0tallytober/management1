@@ -5,6 +5,8 @@ import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.View
+import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.google.firebase.database.FirebaseDatabase
 import com.venkatesh.schoolmanagement.R
 import com.venkatesh.schoolmanagement.model.Profiles
@@ -35,6 +37,14 @@ class ProfileDetailsActivity : AppCompatActivity() {
             tvName.text = it.name
             tvPhone.text = it.phoneNumber
             tvGender.text = it.gender
+            tvClassName.text = it.className
+            if (it.url!=null && it.url.isNotEmpty()){
+                Glide.with(this).load(it.url)
+                    .thumbnail(0.5f)
+                    .crossFade()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .into(imgProfile)
+            }
         }
 
     }
